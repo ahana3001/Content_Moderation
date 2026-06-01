@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ app_name }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Deploy-ready moderation workspace</p>
+          <h1>{{ app_name }}</h1>
+          <p class="hero-text">
+            {{ tagline }}. Paste any message, choose where it appears, and get
+            an instant policy decision before it reaches users.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#moderator">Try the live demo</a>
+            <a class="button button-secondary" href="/docs">API docs</a>
+          </div>
+        </div>
+        <aside class="hero-card">
+          <span class="status-pill">Live scoring</span>
+          <h2>How it works</h2>
+          <ul class="feature-list">
+            <li>Classifies content across 7 risk categories</li>
+            <li>Adapts thresholds by surface like chat or signup</li>
+            <li>Returns a clear allow, review, or block decision</li>
+          </ul>
+        </aside>
+      </header>
+
+      <main class="dashboard" id="moderator">
+        <section class="panel form-panel">
+          <div class="panel-header">
+            <div>
+              <p class="section-kicker">Moderation Console</p>
+              <h2>Check content before it ships</h2>
+            </div>
+            <button class="ghost-button" id="fillExample" type="button">Load example</button>
+          </div>
+
+          <form id="moderationForm">
+            <label class="field">
+              <span>Content</span>
+              <textarea
+                id="text"
+                name="text"
+                rows="8"
+                placeholder="Paste a message, comment, signup text, or creator caption"
+                required
+              ></textarea>
+            </label>
+
+            <div class="grid-two">
+              <label class="field">
+                <span>Surface</span>
+                <select id="surface" name="surface">
+                  <option value="chat">Chat</option>
+                  <option value="comment">Comment</option>
+                  <option value="livestream">Livestream</option>
+                  <option value="signup">Signup</option>
+                </select>
+              </label>
+
+              <label class="field">
+                <span>User ID</span>
+                <input id="user_id" name="user_id" type="text" placeholder="Optional" />
+              </label>
+            </div>
+
+            <label class="field">
+              <span>Locale</span>
+              <input id="locale" name="locale" type="text" value="en" />
+            </label>
+
+            <div class="sample-row">
+              <button class="sample-chip" type="button" data-sample="safe">Safe chat</button>
+              <button class="sample-chip" type="button" data-sample="toxic">Toxic message</button>
+              <button class="sample-chip" type="button" data-sample="violent">Threat</button>
+              <button class="sample-chip" type="button" data-sample="spam">Spam promo</button>
+            </div>
+
+            <button class="button button-primary submit-button" type="submit" id="submitButton">
+              Analyze Content
+            </button>
+          </form>
+        </section>
+
+        <section class="panel result-panel">
+          <div class="panel-header">
+            <div>
+              <p class="section-kicker">Decision Output</p>
+              <h2>Readable results for moderators and product teams</h2>
+            </div>
+          </div>
+
+          <div id="emptyState" class="empty-state">
+            <h3>No analysis yet</h3>
+            <p>Run a moderation check to see the policy decision, risk score breakdown, and explanation.</p>
+          </div>
+
+          <div id="resultState" class="result-state hidden">
+            <div class="decision-summary">
+              <div>
+                <p class="section-kicker">Decision</p>
+                <div id="decisionBadge" class="decision-badge">ALLOW</div>
+              </div>
+              <div class="score-card">
+                <span>Highest risk score</span>
+                <strong id="maxScore">0.00</strong>
+              </div>
+            </div>
+
+            <div class="result-grid">
+              <article class="subpanel">
+                <h3>Why this was flagged</h3>
+                <ul id="reasonsList" class="bullet-list"></ul>
+              </article>
+
+              <article class="subpanel">
+                <h3>Matched categories</h3>
+                <div id="categoryTags" class="tag-wrap"></div>
+              </article>
+            </div>
+
+            <article class="subpanel">
+              <div class="subpanel-header">
+                <h3>Category scores</h3>
+                <span class="muted">0.00 to 1.00 risk scale</span>
+              </div>
+              <div id="scoreBars" class="score-bars"></div>
+            </article>
+
+            <article class="subpanel">
+              <h3>Normalized text</h3>
+              <p id="normalizedText" class="normalized-text"></p>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>
