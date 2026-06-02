@@ -186,10 +186,10 @@ For production hosting, you can also put it behind Nginx or a load balancer and 
 
 ## Deploy On Vercel
 
-Vercel needs a root-level Python entrypoint. This repo now includes `index.py`, which points Vercel to the FastAPI app.
+Vercel needs a root-level Python entrypoint. This repo uses `index.py`, which points Vercel to the FastAPI app.
 
 1. Commit and push `index.py` to GitHub.
 2. In Vercel, redeploy the project from the same repository.
 3. After deploy, open the root URL again.
 4. If the homepage still shows a 404, open `/docs` and `/health` to confirm the backend is live.
-5. If Vercel still does not detect the app, re-import the repo after the `index.py` change.
+5. If Vercel still does not detect the app, make sure the deployment is using the latest commit from `main`.
